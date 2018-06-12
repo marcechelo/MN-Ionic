@@ -8,11 +8,51 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <form
+    (ngSubmit)="validarFormulario(formulario)"
+    #formulario="ngForm">
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>Username - {{nombre}}</ion-label>
+        <ion-input [(ngModel)]="nombre"
+                   name="nombre"
+                   type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <p>valid:{{passwordFormulario.valid}}</p>
+          <p>touched:{{passwordFormulario.touched}}</p>
+          <p>pristine:{{passwordFormulario.pristine}}</p>
+          <p>dirty:{{passwordFormulario.dirty}}</p>
+          <p>untouched:{{passwordFormulario.untouched}}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password"
+                   required
+                   minlength="3"
+                   
+                   [(ngModel)]="password"
+                   name="password"
+                   #passwordFormulario = "ngModel"
+        ></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <button ion-button color="secondary"
+            type="submit"
+            clear>Enviar datos
+    </button>
+
+  </form>
+
+
 </ion-content>
+

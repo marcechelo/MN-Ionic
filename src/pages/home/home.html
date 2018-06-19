@@ -9,6 +9,8 @@
 
 <ion-content padding>
 
+  <mostrar-usuario></mostrar-usuario>
+
   <form
     (ngSubmit)="validarFormulario(formulario)"
     #formulario="ngForm">
@@ -17,9 +19,16 @@
 
       <ion-item>
         <ion-label floating>Username - {{nombre}}</ion-label>
+
+
         <ion-input [(ngModel)]="nombre"
                    name="nombre"
                    type="text"></ion-input>
+
+
+
+
+
       </ion-item>
 
       <ion-item>
@@ -29,7 +38,31 @@
           <p>pristine:{{passwordFormulario.pristine}}</p>
           <p>dirty:{{passwordFormulario.dirty}}</p>
           <p>untouched:{{passwordFormulario.untouched}}</p>
-          <p>{{passwordFormulario.errors}}</p>
+          <p>{{passwordFormulario.errors?.required}}</p>
+          <p>{{passwordFormulario.errors?.minlength}}</p>
+          <p>{{passwordFormulario.errors?.maxlength}}</p>
+
+
+        </ion-label>
+      </ion-item>
+
+
+      <ion-item *ngIf="passwordFormulario.errors
+      &&passwordFormulario.dirty">
+        <ion-label>
+          <p style="background-color: red;color: white">
+            ERROR -
+            <span *ngIf="passwordFormulario.errors.required">
+              Campo requerido
+            </span>
+            <span *ngIf="passwordFormulario.errors.minlength">
+              Necesita mas de 3 caracteres
+            </span>
+            <span *ngIf="passwordFormulario.errors.maxlength">
+              No puede escribir mas de 5 caracteres
+            </span>
+
+          </p>
         </ion-label>
       </ion-item>
 
@@ -39,21 +72,56 @@
                    required
                    minlength="3"
                    maxlength="5"
+
+
                    [(ngModel)]="password"
                    name="password"
-                   #passwordFormulario = "ngModel"
+                   #passwordFormulario="ngModel"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="passwordConfirmacionFormulario.errors
+      &&passwordConfirmacionFormulario.dirty">
+        <ion-label>
+          <p style="background-color: red;color: white">
+            ERROR -
+            <span *ngIf="passwordConfirmacionFormulario.errors.required">
+              Campo requerido
+            </span>
+            <span *ngIf="passwordConfirmacionFormulario.errors.minlength">
+              Necesita mas de 3 caracteres
+            </span>
+            <span *ngIf="passwordConfirmacionFormulario.errors.maxlength">
+              No puede escribir mas de 5 caracteres
+            </span>
+
+          </p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Password confirmacion</ion-label>
+        <ion-input type="password"
+                   required
+                   minlength="3"
+                   maxlength="5"
+                   [(ngModel)]="passwordConfirmacion"
+                   name="passwordConfirmacion"
+                   #passwordConfirmacionFormulario="ngModel"
         ></ion-input>
       </ion-item>
 
     </ion-list>
 
     <button ion-button color="secondary"
+            [disabled]="formulario.invalid"
             type="submit"
             clear>Enviar datos
     </button>
+
+
 
   </form>
 
 
 </ion-content>
-
